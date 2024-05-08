@@ -14,7 +14,7 @@ import geopandas as gpd
 from pathlib import Path
 from datetime import datetime, timedelta
 #from tqdm.autonotebook import tqdm
-from tqdm import tqdm
+#from tqdm import tqdm
 from typing import Tuple
 import glob
 
@@ -108,7 +108,7 @@ def calc_standard_pcpn(date:datetime)->float:
 #################################################################################
 STATES, COUNTIES = get_shapefile()
 
-DATES = gpd.pd.date_range(datetime(2022,6,1),datetime(2022,6,30))
+DATES = gpd.pd.date_range(datetime(2000,2,1),datetime(2022,12,31))
 for date in DATES:
     print(date)
     #sys.exit()
@@ -143,7 +143,7 @@ for date in DATES:
     LGI_WGS_SE = LGI_WGS_SE.where(MASK, np.nan).copy()
     
     LGI_WGS_SE.rio.write_nodata(LGI_WGS_SE.rio.nodata, encoded=True, inplace=True)
-    LGI_WGS_SE.rio.to_raster(dir+f'../LGI_data/LGI_{date:%Y%m%d}_AL.tif',mask=True)
+    LGI_WGS_SE.rio.to_raster(f'../LGI_data/LGI_{date:%Y%m%d}_AL.tif',mask=True)
     
     print(f'{date} : DONE!')
 
